@@ -1,0 +1,24 @@
+#This kv code displays files only in the current dir, not folders, including the '../'
+#"." signifies current dir
+
+        FileChooserListView:
+            id: MTFcontainer
+            on_selection: app.MyFuncThatHandlesFileChosen(args)
+            rootpath: "."                                             #disable "../"   use  path: "." if you need "../" parent
+            filter_dirs: True                                         #You need this in along with the next line
+            filters: [app.MFilter_FileChooser]                        #Call my function that determines if an entry is file or folder
+            
+            
+            
+#In your .py file:
+
+    def MFilter_FileChooser(self, folder, file):
+        if os.path.isdir(file):
+            return False
+        else:
+            return True
+            
+    def MyFuncThatHandlesFileChosen(self, args)
+    ...
+    act on the filename passed to it
+    ...
